@@ -16,3 +16,60 @@ describe('stringifyJSON', function(){
 
   });
 });
+
+stringifyJSON = function(val) {
+  console.log(val);
+  if (typeof val === 'number') {
+    return val.toString();
+  }
+  else if (val === null) {
+    return 'null';
+  }
+  else if (val === true) {
+    return 'true';
+  }
+  else if (val === false) {
+    return 'false';
+  }
+  else if (typeof val === 'string') {
+    return "\"" +val + "\"";
+  }
+  else if (val === undefined || typeof val === 'function') {
+    return "";
+  }
+  else if (typeof val === 'object') {
+    if (val.length === undefined) {
+      if (jQuery.isEmptyObject(val)) {
+        return '{}';
+      } else {
+        var str = "{";
+        var isFirst = true;
+        for (var i in val) {
+          if (stringifyJSON(val[i]) != "") {
+            if (isFirst) {
+              isFirst = false;
+            } else {
+              str += ",";
+            }
+            str += stringifyJSON(i) +":" + stringifyJSON(val[i]); 
+          }
+        }
+      return str + '}';
+      }
+    }
+    else if (val.length === 0) {
+      return '[]';
+    }
+    else {
+      var str = "[";
+      for (var i in val) {
+        if (i != 0) {
+          str += ",";
+        }
+        str += stringifyJSON(val[i]);
+      }
+      return str + ']';
+    }
+  }
+  return val;
+}
