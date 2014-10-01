@@ -18,7 +18,7 @@ describe('stringifyJSON', function(){
 });
 
 stringifyJSON = function(val) {
-  console.log(val);
+  //console.log(val);
   if (typeof val === 'number') {
     return val.toString();
   }
@@ -63,13 +63,15 @@ stringifyJSON = function(val) {
     else {
       var str = "[";
       for (var i in val) {
-        if (i != 0) {
-          str += ",";
+        if (stringifyJSON(val[i]) != "") {
+          if (i != 0) {
+            str += ",";
+          }
+          str += stringifyJSON(val[i]);
         }
-        str += stringifyJSON(val[i]);
       }
       return str + ']';
     }
   }
-  return val;
+  //return val;
 }

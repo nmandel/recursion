@@ -28,3 +28,26 @@ describe('getElementsByClassName', function(){
   });
 
 });
+
+getElementsByClassName = function(name) {
+  
+  var res = [];
+  res.push(document.body);
+  var nodes = document.body.childNodes
+  adder = function(x) {
+    for (var i = 0; i < x.length; i++) {
+      //console.log(x[i].classList);
+      if (x[i].classList != undefined) {
+        nodes = x[i].childNodes;
+        adder(nodes);
+        if ($.inArray(name, x[i].classList) != -1) {
+          res.push(x[i]);
+        }
+      }
+    }
+  }
+  adder(nodes);
+  //console.log(res); 
+
+  return res;
+}
